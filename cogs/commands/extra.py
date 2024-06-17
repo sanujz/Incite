@@ -453,7 +453,7 @@ Threads : {len(guild.threads)}
             embed.add_field(
                 name="__Extra__",
                 value=
-                f"**Boosting:** {f'<t:{round(member.premium_since.timestamp())}:R>' if member in ctx.guild.premium_subscribers else 'None'}\n**Voice <:Incite_Voice:1251971005434433617>:** {'None' if not member.voice else member.voice.channel.mention}",
+                f"**Boosting:** {f'<t:{round(member.premium_since.timestamp())}:R>' if member in ctx.guild.premium_subscribers else 'None'}\n**Voice :** {'None' if not member.voice else member.voice.channel.mention}",
                 inline=False)
         if member in ctx.guild.members:
             embed.add_field(name="__Key Permissions__",
