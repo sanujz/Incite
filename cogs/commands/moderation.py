@@ -611,7 +611,7 @@ Reason: `{entry.reason}`\n\n''')
     @commands.cooldown(1, 20, commands.BucketType.member)
     @commands.max_concurrency(1, per=commands.BucketType.default, wait=False)
     @commands.guild_only()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_messages=True)
     async def untimeout(self, ctx, member: discord.Member):
         data = getConfig(ctx.guild.id)
         lol = data['adminrole']  
