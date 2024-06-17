@@ -347,25 +347,25 @@ Threads : {len(guild.threads)}
 
         badges = ""
         if member.public_flags.hypesquad:
-            badges += "<:hypesquad_flag:1052741566097264702> "
+            badges += "<:Incite_Hypesquad:1252267631663255684> "
         if member.public_flags.hypesquad_balance:
-            badges += "<:balance:1073841476406104105> "
+            badges += "<:Incite_Balance:1252267581138796544> "
         if member.public_flags.hypesquad_bravery:
-            badges += "<:HYPERSQUADBRAVERY:1073841622049116182> "
+            badges += "<:Incite_Bravery:1252267577963708546> "
         if member.public_flags.hypesquad_brilliance:
-            badges += "<:Brilance:1073841713480745020> "
+            badges += "<:Incite_Brilance:1252267574620848179> "
         if member.public_flags.early_supporter:
-            badges += "<:earlysupporter:1073841811413545021> "
+            badges += "<:Incite_EarlyMember:1252267572435353701> "
         if member.public_flags.active_developer:
-            badges += "<:active_dev:1073841992850751488> "
+            badges += "<:Incite_VerifiedDev:1252267569264590949> "
         if member.public_flags.verified_bot_developer:
-            badges += "<:developer:1073842115655782470> "
+            badges += "<:Incite_Dev:1252267565967737013> "
         if member.public_flags.discord_certified_moderator:
-            badges += "<:discord_certified_moderator_flag:1052742235541737553> "
+            badges += "<:Incite_Member:1252267563090448395> "
         if member.public_flags.staff:
-            badges += "<:staff_flag:1052742379741925406> "
+            badges += "<:Incite_Staff:1252267560536375409> "
         if member.public_flags.partner:
-            badges += "<:partner_flag:1052742550647218196> "
+            badges += "<:Incite_Partner:1252267558120460341> "
         if badges == None or badges == "":
             badges += "None"
 
@@ -410,7 +410,7 @@ Threads : {len(guild.threads)}
             if member == ctx.guild.owner:
                 aklm = "Server Owner"
             elif member.guild_permissions.administrator:
-                aklm = "Server homie"
+                aklm = "Server Administrator"
             elif member.guild_permissions.ban_members or member.guild_permissions.kick_members:
                 aklm = "Server Moderator"
             else:
@@ -433,7 +433,7 @@ Threads : {len(guild.threads)}
 **Name:** {member}
 **ID:** {member.id}
 **Nickname:** {nickk}
-**Bot?:** {'<:Incite_Success:1251971018033987654> Yes' if member.bot else '<:no_badge:1073853728764985385> No'}
+**Bot?:** {'<:Incite_Success:1251971018033987654> Yes' if member.bot else '<:Incite_Failure:1251971011855913011> No'}
 **Badges:** {badges}
 **Account Created:** <t:{round(member.created_at.timestamp())}:R>
 **Server Joined:** {joinedat}
@@ -453,7 +453,7 @@ Threads : {len(guild.threads)}
             embed.add_field(
                 name="__Extra__",
                 value=
-                f"**Boosting:** {f'<t:{round(member.premium_since.timestamp())}:R>' if member in ctx.guild.premium_subscribers else 'None'}\n**Voice <:jk_vc171771:1050950158566821999>:** {'None' if not member.voice else member.voice.channel.mention}",
+                f"**Boosting:** {f'<t:{round(member.premium_since.timestamp())}:R>' if member in ctx.guild.premium_subscribers else 'None'}\n**Voice <:Incite_Voice:1251971005434433617>:** {'None' if not member.voice else member.voice.channel.mention}",
                 inline=False)
         if member in ctx.guild.members:
             embed.add_field(name="__Key Permissions__",
@@ -1328,7 +1328,7 @@ Threads : {len(guild.threads)}
                               value=f"{badges}",
                               inline=False)
               embed.add_field(name="**Bot Badges:**",
-                              value="<:no_badge:1073853728764985385> **NO BADGES**",
+                              value="<:Incite_Failure:1251971011855913011> **NO BADGES**",
                               inline=False)
               embed.set_author(name=f"{mem}",
                                  icon_url=mem.avatar.url
