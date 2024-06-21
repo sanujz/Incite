@@ -211,8 +211,29 @@ class Fun(commands.Cog):
         }
         fat_percentage = random.choice(list(responses.keys()))
         fat_name = responses[fat_percentage]
-        embed.description = f"**{person} is {fat_name}** 🍔"
+        embed.description = f"**{person} is {fat_name}**"
         embed.set_footer(text=f"How fat are you? - {ctx.author.name}")
+        await ctx.send(embed=embed)
+
+    @commands.command(name="howtall",
+                      aliases=['height'],
+                      help="Check someone's height",
+                      usage="Howtall <person>")
+    @blacklist_check()
+    @ignore_check()
+    async def howtall(self, ctx, *, person):
+        embed = discord.Embed(color=0x2f3136)
+        heights = {
+            'minion': 'Short like a minion',
+            'short': 'Short',
+            'average': 'Average height',
+            'tall': 'Tall',
+            'giant': 'Giant (reaching for the clouds)'
+        }
+        height_category = random.choice(list(heights.keys()))
+        height_description = heights[height_category]
+        embed.description = f"**{person} is {height_description}**"
+        embed.set_footer(text=f"How tall are you? - {ctx.author.name}")
         await ctx.send(embed=embed)
 
     @commands.command(name="slots")
