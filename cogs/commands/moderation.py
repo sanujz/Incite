@@ -950,9 +950,9 @@ Reason: `{entry.reason}`\n\n''')
         """Removes all messages containing a substring.
         The substring must be at least 3 characters long.
         """
-        if len(substr) < 3:
+        if len(substr) < 2:
             await ctx.send(
-                "The substring length must be at least 3 characters.")
+                "The substring length must be at least 2 characters.")
         else:
             await self.do_removal(ctx, 1000, lambda e: substr in e.content)
 
