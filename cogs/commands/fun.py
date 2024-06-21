@@ -250,7 +250,10 @@ class Fun(commands.Cog):
             'average': 100,
             'below_average': 80,
             'very_low': 60,
-            'not_sure': 'Unknown'
+            'not_sure': 'Unknown',
+            'dumb': '0',
+            'slow': '40'
+
         }
         iq_category = random.choice(list(iq_scores.keys()))
         iq_value = iq_scores[iq_category]
