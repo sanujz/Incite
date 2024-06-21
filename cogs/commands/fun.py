@@ -187,6 +187,34 @@ class Fun(commands.Cog):
         embed.set_footer(text=f'How gay are you? - {ctx.author.name}')
         await ctx.send(embed=embed)
 
+    @commands.command(name="howfat",
+                      aliases=['fat'],
+                      help="Check someone's fat percentage",
+                      usage="Howfat <person>")
+    @blacklist_check()
+    @ignore_check()
+    async def howfat(self, ctx, *, person):
+        embed = discord.Embed(color=0x2f3136)
+        responses = {
+            '5': 'Slim',
+            '10': 'Lean',
+            '20': 'Average',
+            '25': 'Healthy',
+            '30': 'Chubby',
+            '40': 'Overweight',
+            '50': 'Obese',
+            '60': 'Very Obese',
+            '70': 'Extremely Obese',
+            '80': 'Morbidly Obese',
+            '90': 'Super Obese',
+            '100': 'Ultra Obese'
+        }
+        fat_percentage = random.choice(list(responses.keys()))
+        fat_name = responses[fat_percentage]
+        embed.description = f"**{person} is {fat_name}** 🍔"
+        embed.set_footer(text=f"How fat are you? - {ctx.author.name}")
+        await ctx.send(embed=embed)
+
     @commands.command(name="slots")
     @blacklist_check()
     @ignore_check()
