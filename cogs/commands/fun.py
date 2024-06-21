@@ -236,6 +236,28 @@ class Fun(commands.Cog):
         embed.set_footer(text=f"How tall are you? - {ctx.author.name}")
         await ctx.send(embed=embed)
 
+    @commands.command(name="iq",
+                      help="Check someone's IQ",
+                      usage="IQ <person>")
+    @blacklist_check()
+    @ignore_check()
+    async def iq(self, ctx, *, person):
+        embed = discord.Embed(color=0x2f3136)
+        iq_scores = {
+            'genius': 160,
+            'very_high': 140,
+            'above_average': 120,
+            'average': 100,
+            'below_average': 80,
+            'very_low': 60,
+            'not_sure': 'Unknown'
+        }
+        iq_category = random.choice(list(iq_scores.keys()))
+        iq_value = iq_scores[iq_category]
+        embed.description = f"**{person}'s IQ is {iq_value}** 🧠"
+        embed.set_footer(text=f"How smart are you? - {ctx.author.name}")
+        await ctx.send(embed=embed)
+
     @commands.command(name="slots")
     @blacklist_check()
     @ignore_check()
