@@ -338,6 +338,56 @@ class Fun(commands.Cog):
         embed.set_footer(text=f"How's your battery? - {ctx.author.name}")
         await ctx.send(embed=embed)
 
+    @commands.command(name="randomquestion",
+                      aliases=['question'],
+                      help="get a random question",
+                      usage="randomquestion")
+    async def random_question(self, ctx):
+        questions = [
+            "What impact do you think artificial intelligence will have on the job market in the next decade?",
+            "If you could travel back in time to any historical event, which one would you choose and why?",
+            "What's the most interesting book you've read recently?",
+            "If you could have any superpower, what would it be and how would you use it?",
+            "What's your favorite memory from childhood?",
+            "If you could visit any country in the world, where would you go?",
+            "What's the best piece of advice you've ever received?",
+            "If you could meet any famous person (dead or alive), who would it be?",
+            "What's a skill you'd like to learn or improve?",
+            "What's your favorite way to relax and unwind?",
+            "If you could have dinner with any fictional character, who would it be?",
+            "What's a hobby or interest you've always wanted to pursue?",
+            "What's something you're grateful for today?",
+            "If you could change one thing about the world, what would it be?",
+            "What's a goal you're currently working towards?",
+            "What's a topic you'd love to learn more about?",
+            "If you could time travel to the future, what year would you visit?",
+            "What's a fun fact about yourself?",
+            "What's a challenge you've overcome?",
+            "If you could invent a new holiday, what would it celebrate?",
+            "What's the most adventurous thing you've ever done?",
+            "If you could instantly master any musical instrument, which one would you choose?",
+            "What's a movie or TV show that you can watch over and over again without getting bored?",
+            "If you could have a conversation with any historical figure, who would it be and what would you ask them?",
+            "What's your favorite type of cuisine, and why?",
+            "If you could live in any fictional world, which one would you pick?",
+            "What's a skill you wish you had learned earlier in life?",
+            "If you could switch lives with someone for a day, who would it be and why?",
+            "What's the best piece of advice you've ever received from a friend or family member?",
+            "If you could visit any natural wonder (e.g., Grand Canyon, Northern Lights), where would you go?",
+            "What's a book that has had a significant impact on your perspective?",
+            "If you could time travel to witness any historical event, which one would you choose?",
+            "What's a hobby or interest you've recently taken up or want to explore?",
+            "If you could eliminate one daily annoyance, what would it be?",
+            "What's a place you've always dreamed of traveling to?",
+            "If you could attend any major event (past or future), what would it be?",
+            "What's a childhood memory that still brings a smile to your face?",
+            "If you could meet any fictional character in real life, who would it be?",
+            "What's a goal you've set for yourself this year?",
+            "If you could invent a new flavor of ice cream, what would it taste like?"
+        ]
+        random_question = random.choice(questions)
+        await ctx.send(f"Here's a random question: **{random_question}**!")
+
     @commands.command(name="slots")
     @blacklist_check()
     @ignore_check()
