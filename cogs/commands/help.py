@@ -40,7 +40,7 @@ class HelpCommand(commands.HelpCommand):
         description=
         "You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/D78YMq279a)",
         color=0x2f3136)
-      #await self.context.reply(embed=embed, mention_author=False)
+      await self.context.reply(embed=embed, mention_author=False)
       pass
     else:
 
@@ -70,7 +70,7 @@ class HelpCommand(commands.HelpCommand):
         description=
         "You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/Z9PAen5mxh)",
         color=0x2f3136)
-      #return await self.context.reply(embed=embed, mention_author=False)
+      return await self.context.reply(embed=embed, mention_author=False)
       pass
     elif str(self.context.channel.id) in randi["ids"]:
       return None
@@ -126,7 +126,7 @@ class HelpCommand(commands.HelpCommand):
         description=
         "You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/Z9PAen5mxh)",
         color=0x2f3136)
-      #await self.context.reply(embed=embed, mention_author=False)
+      await self.context.reply(embed=embed, mention_author=False)
       pass
     elif str(self.context.channel.id) in randi["ids"]:
       return None
@@ -177,7 +177,7 @@ class HelpCommand(commands.HelpCommand):
         description=
         "You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/Z9PAen5mxh)",
         color=0x2f3136)
-      # await self.context.reply(embed=embed, mention_author=False)
+       await self.context.reply(embed=embed, mention_author=False)
       pass
     elif str(self.context.channel.id) in randi["ids"]:
       return None
@@ -206,7 +206,7 @@ class HelpCommand(commands.HelpCommand):
         description=
         "You Are Blacklisted From Using My Commands.\nIf You Think That It Is A Mistake, You Can Appeal In Our Support Server By Clicking [here](https://discord.gg/Z9PAen5mxh)",
         color=0x2f3136)
-      #return await self.context.reply(embed=embed, mention_author=False)
+      return await self.context.reply(embed=embed, mention_author=False)
       return None
     elif str(self.context.channel.id) in randi["ids"]:
       return None
