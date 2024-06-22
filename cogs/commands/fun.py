@@ -261,6 +261,35 @@ class Fun(commands.Cog):
         embed.set_footer(text=f"How smart are you? - {ctx.author.name}")
         await ctx.send(embed=embed)
 
+    @commands.command(name="job",
+                      help="Check someone's profession",
+                      usage="Job <person>")
+    @blacklist_check()
+    @ignore_check()
+    async def job(self, ctx, *, person):
+        embed = discord.Embed(color=0x2f3136)
+        professions = [
+            "Engineer",
+            "Doctor",
+            "Influencer",
+            "Real Estate Agent",
+            "Teacher",
+            "Personal Assistant (P.A.)",
+            "Professional Sport Player",
+            "Musician",
+            "Drug Dealer",  # Note: This is illegal and unethical.
+            "Uber Driver",
+            "Cashier",
+            "Scammer",  # Note: Also illegal and unethical.
+            "Stripper",
+            "Unemployment",  # Not a profession, but a situation
+            "Cotton Picker"
+        ]
+        random_profession = random.choice(professions)
+        embed.description = f"**{person}'s profession is {random_profession}** 💼"
+        embed.set_footer(text=f"What's your profession? - {ctx.author.name}")
+        await ctx.send(embed=embed)
+
     @commands.command(name="slots")
     @blacklist_check()
     @ignore_check()
