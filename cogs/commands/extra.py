@@ -237,11 +237,14 @@ class Extra(commands.Cog):
         server_owner = guild.owner.display_name
 
         embed = discord.Embed(title=f"Server Information: {guild.name}",
+                              description=f"ID: {guild.id}",
                               color=0x2f3136)
         embed.add_field(name="Owner", value=server_owner, inline=False)
         embed.add_field(name="Total Members", value=total_members, inline=False)
+        embed.add_field(name="Online Members", value=online_members, inline=False)
         embed.add_field(name="Text Channels", value=text_channels, inline=True)
         embed.add_field(name="Voice Channels", value=voice_channels, inline=True)
+        embed.set_footer(text=f"Server Created: {guild.created_at.strftime('%m/%d/%Y %I:%M %p')}")
 
         await ctx.send(embed=embed)
 
