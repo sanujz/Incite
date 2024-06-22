@@ -119,7 +119,7 @@ class Giveaway(commands.Cog):
 
         ends = (datetime.datetime.now().timestamp() + converted)
 
-        embed = discord.Embed(description=f"Winner(s): **{winners}**\nReact with 🎉 to participate!\nEnds <t:{round(ends)}:R> (<t:{round(ends)}:f>)\n\nHosted by {ctx.author.mention}", color=0x2f3136)
+        embed = discord.Embed(description=f"Winner(s): **{winners}**\nReact with <:Incite_Giveaway:1253979871160438825> to participate!\nEnds <t:{round(ends)}:R> (<t:{round(ends)}:f>)\n\nHosted by {ctx.author.mention}", color=0x2f3136)
         
         ends1 = datetime.datetime.utcnow() + datetime.timedelta(seconds=converted)
         ends_utc = ends1.replace(tzinfo=datetime.timezone.utc)
@@ -132,7 +132,7 @@ class Giveaway(commands.Cog):
                              icon_url=self.bot.user.display_avatar.url)
         embed.set_footer(text=f"Ends at")
 
-        message = await ctx.send("🎁 **GIVEAWAY** 🎁", embed=embed)
+        message = await ctx.send("<:Incite_Giveaway:1253979871160438825> **GIVEAWAY**", embed=embed)
         try:
            await ctx.message.delete()
         except:
@@ -140,7 +140,7 @@ class Giveaway(commands.Cog):
 
         await self.cursor.execute("INSERT INTO Giveaway(guild_id, host_id, start_time, ends_at, prize, winners, message_id, channel_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", (ctx.guild.id, ctx.author.id, datetime.datetime.now(), ends, prize, winners, message.id, ctx.channel.id))
 
-        await message.add_reaction("🎉")
+        await message.add_reaction("<:Incite_Giveaway:1253979871160438825>")
         await self.connection.commit()
 
     @tasks.loop(seconds=5)
