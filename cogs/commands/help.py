@@ -110,7 +110,7 @@ class HelpCommand(commands.HelpCommand):
     embed.add_field(
       name="Module",
       value=
-      """<:Incite_Antinuke:1251971685817782293> Security\n<:Incite_Extra:1252166701970100304>  Extra\n<:Incite_General:1251971175706529935> General\n<:Incite_Inv:1251970933338669106> Invc\n<:Incite_Moderation:1251971682911125666> Moderation\n<:Incite_Games:1251971253389099028> Games\n<:Incite_Server:1251971256342024322> Server\n<:Incite_Automod:1251971679710875721> Raidmode\n<:Incite_Vanity:1252168266693214218> Vanityroles\n<:Incite_Member:1251971246887800913> Welcomer""",
+      """<:Incite_Antinuke:1251971685817782293> Security\n<:Incite_Extra:1252166701970100304>  Extra\n<:Incite_General:1251971175706529935> General\n<:Incite_Inv:1251970933338669106> Invc\n<:Incite_Moderation:1251971682911125666> Moderation\n<:Incite_Games:1251971253389099028> Games\n<:Incite_Server:1251971256342024322> Server\n<:Incite_Automod:1251971679710875721> Raidmode\n<:Incite_Vanity:1252168266693214218> Vanityroles\n<:Incite_Member:1251971246887800913> Welcomer\n<:Incite_Giveaway:1253979871160438825> Giveaway""",
       inline=False)
     embed.set_author(name=self.context.author.name,
                      icon_url=self.context.author.display_avatar.url)
