@@ -56,12 +56,7 @@ class HelpCommand(commands.HelpCommand):
         if mtchs:
           for okaay, okay in enumerate(mtchs, start=1):
             msg += f"Did You Mean: \n`[{okaay}]`. `{okay}`\n"
-        embed1 = discord.Embed(
-          color=0x2f3136,
-          title=f"Command `{string}` is not found...\n",
-          description=f"Did You Mean: \n`[{okaay}]`. `{okay}`\n")
-        embed1.set_footer(text=f"Made Thank you for choosing Incite")
-        return None
+        return msg
 
   async def send_bot_help(self, mapping):
     await self.context.typing()
