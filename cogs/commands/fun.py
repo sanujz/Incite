@@ -237,6 +237,7 @@ class Fun(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(name="iq",
+                      aliases=['howsmart'],
                       help="Check someone's IQ",
                       usage="IQ <person>")
     @blacklist_check()
@@ -262,6 +263,7 @@ class Fun(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(name="job",
+                      aliases=['profession'],
                       help="Check someone's profession",
                       usage="Job <person>")
     @blacklist_check()
@@ -286,8 +288,34 @@ class Fun(commands.Cog):
             "Cotton Picker"
         ]
         random_profession = random.choice(professions)
-        embed.description = f"**{person}'s profession is {random_profession}** 💼"
+        embed.description = f"**{person}'s profession is {random_profession}**"
         embed.set_footer(text=f"What's your profession? - {ctx.author.name}")
+        await ctx.send(embed=embed)
+
+    @commands.command(name="personality",
+                      aliases=['person'],
+                      help="Check if someone is rude or friendly",
+                      usage="Personality <person>")
+    @blacklist_check()
+    @ignore_check()
+    async def personality(self, ctx, *, person):
+        embed = discord.Embed(color=0x2f3136)
+        personalities = {
+            'rude': 'Rude (watch out for sharp edges)',
+            'friendly': 'Friendly (a warm smile and open arms)',
+            'mysterious': 'Mysterious (keeps you guessing)',
+            'charming': 'Charming (smooth talker)',
+            'quirky': 'Quirky (unique and delightful)',
+            'aloof': 'Aloof (a bit distant)',
+            'optimistic': 'Optimistic (glass half full)',
+            'cynical': 'Cynical (glass half empty)',
+            'eccentric': 'Eccentric (coloring outside the lines)',
+            'reserved': 'Reserved (quiet and thoughtful)'
+        }
+        personality_category = random.choice(list(personalities.keys()))
+        personality_description = personalities[personality_category]
+        embed.description = f"**{person} is {personality_description}**"
+        embed.set_footer(text=f"What's your personality? - {ctx.author.name}")
         await ctx.send(embed=embed)
 
     @commands.command(name="slots")
