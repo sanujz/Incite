@@ -223,132 +223,132 @@ class Extra(commands.Cog):
         embed.set_thumbnail(url=self.bot.user.avatar.url)
         await ctx.send(embed=embed)
 
-  @commands.hybrid_command(name="serverinfo",
-                           aliases=["sinfo", "si"],
-                           with_app_command=True)
-  @blacklist_check() 
-  @ignore_check()
-  async def serverinfo(self, ctx: commands.Context):
-    c_at = int(ctx.guild.created_at.timestamp())
-    nsfw_level = ''
-    if ctx.guild.nsfw_level.name == 'default':
-      nsfw_level = 'Default'
-    if ctx.guild.nsfw_level.name == 'explicit':
-      nsfw_level = 'Explicit'
-    if ctx.guild.nsfw_level.name == 'safe':
-      nsfw_level = 'Safe'
-    if ctx.guild.nsfw_level.name == 'age_restricted':
-      nsfw_level = 'Age Restricted'
+    @commands.hybrid_command(name="serverinfo",
+                             aliases=["sinfo", "si"],
+                             with_app_command=True)
+    @blacklist_check() 
+    @ignore_check()
+    async def serverinfo(self, ctx: commands.Context):
+      c_at = int(ctx.guild.created_at.timestamp())
+      nsfw_level = ''
+      if ctx.guild.nsfw_level.name == 'default':
+        nsfw_level = 'Default'
+      if ctx.guild.nsfw_level.name == 'explicit':
+        nsfw_level = 'Explicit'
+      if ctx.guild.nsfw_level.name == 'safe':
+        nsfw_level = 'Safe'
+      if ctx.guild.nsfw_level.name == 'age_restricted':
+        nsfw_level = 'Age Restricted'
 
-    guild: discord.Guild = ctx.guild
-    t_emojis = len(guild.emojis)
-    t_stickers = len(guild.stickers)
-    total_emojis = t_emojis + t_stickers
+      guild: discord.Guild = ctx.guild
+      t_emojis = len(guild.emojis)
+      t_stickers = len(guild.stickers)
+      total_emojis = t_emojis + t_stickers
 
-    embed = discord.Embed(color=self.color).set_author(
-      name=f"{guild.name}'s Information",
-      icon_url=guild.me.display_avatar.url
-      if guild.icon is None else guild.icon.url).set_footer(
-        text=f"Requested By {ctx.author}",
-        icon_url=ctx.author.avatar.url
-        if ctx.author.avatar else ctx.author.default_avatar.url)
-    if guild.icon is not None:
-      embed.set_thumbnail(url=guild.icon.url)
-      embed.timestamp = discord.utils.utcnow()
+      embed = discord.Embed(color=self.color).set_author(
+        name=f"{guild.name}'s Information",
+        icon_url=guild.me.display_avatar.url
+        if guild.icon is None else guild.icon.url).set_footer(
+          text=f"Requested By {ctx.author}",
+          icon_url=ctx.author.avatar.url
+          if ctx.author.avatar else ctx.author.default_avatar.url)
+      if guild.icon is not None:
+        embed.set_thumbnail(url=guild.icon.url)
+        embed.timestamp = discord.utils.utcnow()
 
-    for r in ctx.guild.roles:
-      if len(ctx.guild.roles) < 1:
-        roless = "None"
-      else:
-        if len(ctx.guild.roles) < 50:
-          roless = " • ".join(
-            [role.mention for role in ctx.guild.roles[1:][::-1]])
+      for r in ctx.guild.roles:
+        if len(ctx.guild.roles) < 1:
+          roless = "None"
         else:
-          if len(ctx.guild.roles) > 50:
-            roless = "Too many roles to show here."
-    embed.add_field(
-      name="**__About__**",
-      value=
-      f"**Name : ** {guild.name}\n**ID :** {guild.id}\n**Owner :** {guild.owner} (<@{guild.owner_id}>)\n**Created At : ** <t:{c_at}:F>\n**Members :** {len(guild.members)}",
-      inline=False)
-
-    embed.add_field(
-      name="**__Extras__**",
-      value=
-      f"""**Verification Level :** {str(guild.verification_level).title()}\n**AFK Channel :** {ctx.guild.afk_channel}\n**AFK Timeout :** {str(ctx.guild.afk_timeout / 60)}\n**System Channel :** {"None" if guild.system_channel is None else guild.system_channel.mention}\n**NSFW level :** {nsfw_level}\n**Explicit Content Filter :** {guild.explicit_content_filter.name}\n**Max Talk Bitrate :** {int(guild.bitrate_limit)} kbps""",
-      inline=False)
-
-    embed.add_field(name="**__Description__**",
-                    value=f"""{guild.description}""",
-                    inline=False)
-    if guild.features:
-      ftrs = ("\n").join([f"{'✅'+' : '+feature.replace('_',' ').title()}" for feature in guild.features])
+          if len(ctx.guild.roles) < 50:
+            roless = " • ".join(
+              [role.mention for role in ctx.guild.roles[1:][::-1]])
+          else:
+            if len(ctx.guild.roles) > 50:
+              roless = "Too many roles to show here."
+      embed.add_field(
+        name="**__About__**",
+        value=
+        f"**Name : ** {guild.name}\n**ID :** {guild.id}\n**Owner :** {guild.owner} (<@{guild.owner_id}>)\n**Created At : ** <t:{c_at}:F>\n**Members :** {len(guild.members)}",
+        inline=False)
 
       embed.add_field(
+        name="**__Extras__**",
+        value=
+        f"""**Verification Level :** {str(guild.verification_level).title()}\n**AFK Channel :** {ctx.guild.afk_channel}\n**AFK Timeout :** {str(ctx.guild.afk_timeout / 60)}\n**System Channel :** {"None" if guild.system_channel is None else guild.system_channel.mention}\n**NSFW level :** {nsfw_level}\n**Explicit Content Filter :** {guild.explicit_content_filter.name}\n**Max Talk Bitrate :** {int(guild.bitrate_limit)} kbps""",
+        inline=False)
 
-        name="**__Features__**",
+      embed.add_field(name="**__Description__**",
+                      value=f"""{guild.description}""",
+                      inline=False)
+      if guild.features:
+        ftrs = ("\n").join([f"{'✅'+' : '+feature.replace('_',' ').title()}" for feature in guild.features])
 
-        value=f"{ftrs if len(ftrs) <= 1024 else ftrs[0:1000] + 'and more...'}")
+        embed.add_field(
+
+          name="**__Features__**",
+
+          value=f"{ftrs if len(ftrs) <= 1024 else ftrs[0:1000] + 'and more...'}")
       
 
-    embed.add_field(name="**__Members__**",
-                    value=f"""
-Members : {len(guild.members)}
-Humans : {len(list(filter(lambda m: not m.bot, guild.members)))}
-Bots : {len(list(filter(lambda m: m.bot, guild.members)))}
-            """,
-                    inline=False)
-    tchl = 0
-    tchh = 0
-    tvcl = 0
-    tvch = 0
-    #hhh
-    for channel1 in ctx.guild.channels:
+      embed.add_field(name="**__Members__**",
+                      value=f"""
+  Members : {len(guild.members)}
+  Humans : {len(list(filter(lambda m: not m.bot, guild.members)))}
+  Bots : {len(list(filter(lambda m: m.bot, guild.members)))}
+              """,
+                      inline=False)
+      tchl = 0
+      tchh = 0
+      tvcl = 0
+      tvch = 0
+      #hhh
+      for channel1 in ctx.guild.channels:
     
-        if channel1 in ctx.guild.text_channels:
-            overwrite = channel1.overwrites_for(ctx.guild.default_role)
-            if overwrite.send_messages == False:
-                tchl += 1
-            if overwrite.view_channel == False:
-                tchh += 1
-        if channel1 in ctx.guild.voice_channels:
-            overwrite = channel1.overwrites_for(ctx.guild.default_role)
-            if overwrite.connect == False:
-                tvcl += 1
-            if overwrite.view_channel:
-                tvch += 1
-    #tchl1 = tchl
+          if channel1 in ctx.guild.text_channels:
+              overwrite = channel1.overwrites_for(ctx.guild.default_role)
+              if overwrite.send_messages == False:
+                  tchl += 1
+              if overwrite.view_channel == False:
+                  tchh += 1
+          if channel1 in ctx.guild.voice_channels:
+              overwrite = channel1.overwrites_for(ctx.guild.default_role)
+              if overwrite.connect == False:
+                  tvcl += 1
+              if overwrite.view_channel:
+                  tvch += 1
+      #tchl1 = tchl
             
     #for vc1 in
-    embed.add_field(name="**__Channels__**",
-                    value=f"""
-Categories : {len(guild.categories)}
-Text Channels : {len(guild.text_channels)} (Locked: {tchl}, Hidden: {tchh})
-Voice Channels : {len(guild.voice_channels)} (Locked: {tvcl}, Hidden: {tvch})
-Threads : {len(guild.threads)}
-            """,
-                    inline=False)
+      embed.add_field(name="**__Channels__**",
+                      value=f"""
+  Categories : {len(guild.categories)}
+  Text Channels : {len(guild.text_channels)} (Locked: {tchl}, Hidden: {tchh})
+  Voice Channels : {len(guild.voice_channels)} (Locked: {tvcl}, Hidden: {tvch})
+  Threads : {len(guild.threads)}
+              """,
+                      inline=False)
 
-    embed.add_field(name="**__Emoji Info__**",
-                    value=f"""
-**Regular Emojis :** {t_emojis}
-**Stickers :** {t_stickers}
-**Total Emoji/Stickers :** {total_emojis}
-             """,
-                    inline=False)
+      embed.add_field(name="**__Emoji Info__**",
+                      value=f"""
+  **Regular Emojis :** {t_emojis}
+  **Stickers :** {t_stickers}
+  **Total Emoji/Stickers :** {total_emojis}
+               """,
+                      inline=False)
+  
+      embed.add_field(
+        name="**__Boost Status__**",
+        value=
+        f"Level : {guild.premium_tier} {guild.premium_subscription_count} Boosts ]\nBooster Role : {guild.premium_subscriber_role.mention if guild.premium_subscriber_role else 'None'}",
+        inline=False)
+      embed.add_field(name=f"**__Server Roles [ {len(guild.roles) - 1} ]__**",
+                      value=f"{roless}",
+                      inline=False)
 
-    embed.add_field(
-      name="**__Boost Status__**",
-      value=
-      f"Level : {guild.premium_tier} {guild.premium_subscription_count} Boosts ]\nBooster Role : {guild.premium_subscriber_role.mention if guild.premium_subscriber_role else 'None'}",
-      inline=False)
-    embed.add_field(name=f"**__Server Roles [ {len(guild.roles) - 1} ]__**",
-                    value=f"{roless}",
-                    inline=False)
-
-    if guild.banner is not None:
-        embed.set_image(url=guild.banner.url)
-    return await ctx.reply(embed=embed)
+      if guild.banner is not None:
+          embed.set_image(url=guild.banner.url)
+      return await ctx.reply(embed=embed)
 
     @blacklist_check()
     @ignore_check()
