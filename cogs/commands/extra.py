@@ -223,18 +223,18 @@ class Extra(commands.Cog):
         embed.set_thumbnail(url=self.bot.user.avatar.url)
         await ctx.send(embed=embed)
 
-  @commands.hybrid_command(name="uptime",
-                    description="Shows you Bot's Uptime .")
-  @blacklist_check()
-  @ignore_check()
-  async def uptime(self, ctx):
-        pfp = ctx.author.display_avatar.url
-        
-        #uptime = str(uptime).split('.')[0]
-        embed = discord.Embed(title=f"{BotName}'s Uptime", description=f"```{str(datetime.timedelta(seconds=int(round(time.time()-start_time))))}```",
-                              color=self.color)
-        embed.set_footer(text=f"Requested by {ctx.author}" ,  icon_url=pfp)
-        await ctx.send(embed=embed)
+    @commands.hybrid_command(name="uptime",
+                      description="Shows you Bot's Uptime .")
+    @blacklist_check()
+    @ignore_check()
+    async def uptime(self, ctx):
+          pfp = ctx.author.display_avatar.url
+          
+          #uptime = str(uptime).split('.')[0]
+          embed = discord.Embed(title=f"{BotName}'s Uptime", description=f"```{str(datetime.timedelta(seconds=int(round(time.time()-start_time))))}```",
+                                color=self.color)
+          embed.set_footer(text=f"Requested by {ctx.author}" ,  icon_url=pfp)
+          await ctx.send(embed=embed)
     
     @commands.hybrid_command(name="serverinfo",
                          aliases=["sinfo", "si"],
