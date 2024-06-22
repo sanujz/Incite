@@ -63,6 +63,7 @@ from .commands.server import hacker11111111111
 from .commands.vanityroles1 import hacker111111111111
 from .commands.voice import hacker1111111111111 
 from .commands.welcome1 import hacker11111111111111 
+from .commands.giveaway1 import Asher
 
 
 
@@ -107,7 +108,7 @@ async def setup(bot: Astroz):
   await bot.add_cog(hacker111111111111(bot))  
   await bot.add_cog(hacker1111111111111(bot))
   await bot.add_cog(hacker11111111111111(bot))
-
+  await bot.add_cog(Asher(bot))
 
     
 ###########################events################3
