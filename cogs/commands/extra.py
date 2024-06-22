@@ -234,18 +234,28 @@ class Extra(commands.Cog):
         online_members = sum(member.status != discord.Status.offline for member in guild.members)
         text_channels = len(guild.text_channels)
         voice_channels = len(guild.voice_channels)
+        role_count = len(guild.roles)  # Add this line to get the total number of roles
         server_owner = guild.owner.display_name
 
+        # Create an embed
         embed = discord.Embed(title=f"Server Information: {guild.name}",
                               description=f"ID: {guild.id}",
                               color=0x2f3136)
+
+        # Set the server icon as the thumbnail
+        embed.set_thumbnail(url=ctx.guild.icon_url(format="png"))
+
+        # Add fields
         embed.add_field(name="Owner", value=server_owner, inline=False)
         embed.add_field(name="Total Members", value=total_members, inline=False)
-        embed.add_field(name="Online Members", value=online_members, inline=False)
         embed.add_field(name="Text Channels", value=text_channels, inline=True)
         embed.add_field(name="Voice Channels", value=voice_channels, inline=True)
-        embed.set_footer(text=f"Server Created: {guild.created_at.strftime('%m/%d/%Y %I:%M %p')}")
+        embed.add_field(name="Roles", value=role_count, inline=True)  # Display the role count
 
+        # Set the footer
+        embed.set_footer(text=f"Server Created: {guild.created_at.strftime('%m/%d/%Y %I:%M %p')}")
+    
+        # Send the embed
         await ctx.send(embed=embed)
 
     @blacklist_check()
