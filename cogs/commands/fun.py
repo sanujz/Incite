@@ -386,15 +386,16 @@ class Fun(commands.Cog):
     @blacklist_check()
     @ignore_check()
     async def meme(self, ctx):
-        embed = discord.Embed(title="Take some memes", color=0x2f3136)
+        embed = discord.Embed(title="""Take some memes""", color=0x2f3136)
         async with aiohttp.ClientSession() as cs:
-            async with cs.get('https://www.reddit.com/r/dankmemes/new.json?sort=hot') as r:
+            async with cs.get(
+                    'https://www.reddit.com/r/dankmemes/new.json?sort=hot'
+            ) as r:
                 res = await r.json()
-                random_meme = random.choice(res['data']['children'])
-                meme_title = random_meme['data']['title']
-                meme_url = random_meme['data']['url']
-                embed.set_image(url=meme_url)
-                embed.set_footer(text=f"Random Meme: {meme_title}")
+                embed.set_image(url=res['data']['children'][random.randint(
+                    0, 25)]['data']['url'])
+                embed.set_footer(text=f'Random Meme:')
+                #embed.set_footer(text=f'Random Meme:')
                 await ctx.send(embed=embed)
 
     @commands.command(name="cat", usage="cat")
