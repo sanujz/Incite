@@ -223,47 +223,26 @@ class Extra(commands.Cog):
         embed.set_thumbnail(url=self.bot.user.avatar.url)
         await ctx.send(embed=embed)
     
-    @commands.command(name="serverinfo")
+    @commands.command(name="serverinfo", aliases=["si"], help="Get information about the server.")
     async def serverinfo(self, ctx: commands.Context):
-        guild: discord.Guild = ctx.guild
+        guild = ctx.guild
+        total_members = guild.member_count
+        total_channels = len(guild.channels)
+        total_roles = len(guild.roles)
+        total_emojis = len(guild.emojis)
+        total_bots = sum(member.bot for member in guild.members)
 
-        embed = discord.Embed(color=self.color).set_author(
-            name=f"{guild.name}'s Information",
-            icon_url=guild.me.display_avatar.url
-            if guild.icon is None else guild.icon.url).set_footer(
-                text=f"Requested By {ctx.author}",
-                icon_url=ctx.author.avatar.url
-                if ctx.author.avatar else ctx.author.default_avatar.url)
-
-        embed.add_field(
-            name="**__About__**",
-            value=
-            f"**Name : ** {guild.name}\n**ID :** {guild.id}\n**Owner 👑 :** {guild.owner} (<@{guild.owner_id}>)\n**Members :** {len(guild.members)}",
-            inline=False)
-
-        embed.add_field(
-            name="**__Extras__**",
-            value=
-            f"""**Verification Level :** {str(guild.verification_level).title()}\n**AFK Channel :** {ctx.guild.afk_channel}\n**AFK Timeout :** {str(ctx.guild.afk_timeout / 60)}\n**System Channel :** {"None" if guild.system_channel is None else guild.system_channel.mention}""",
-            inline=False)
-
-        embed.add_field(name="**__Members__**",
-                        value=f"""
-        Members : {len(guild.members)}
-        Humans : {len(list(filter(lambda m: not m.bot, guild.members)))}
-        Bots : {len(list(filter(lambda m: m.bot, guild.members)))}
-                    """,
-                        inline=False)
-
-        embed.add_field(name="**__Channels__**",
-                        value=f"""
-        Text Channels : {len(guild.text_channels)}
-        Voice Channels : {len(guild.voice_channels)}
-        Threads : {len(guild.threads)}
-                    """,
-                        inline=False)
-    
-        return await ctx.reply(embed=embed)
+        embed = discord.Embed(color=0x2f3136, title=f"{guild.name} Information")
+        embed.add_field(name="Server ID", value=guild.id, inline=False)
+        embed.add_field(name="Owner", value=guild.owner.mention, inline=False)
+        embed.add_field(name="Total Members", value=total_members, inline=False)
+        embed.add_field(name="Total Channels", value=total_channels, inline=False)
+        embed.add_field(name="Total Roles", value=total_roles, inline=False)
+        embed.add_field(name="Total Emojis", value=total_emojis, inline=False)
+        embed.add_field(name="Total Bots", value=total_bots, inline=False)
+        embed.set_thumbnail(url=guild.icon_url)
+        embed.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
+        await ctx.send(embed=embed)
 
     @blacklist_check()
     @ignore_check()
