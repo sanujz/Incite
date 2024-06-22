@@ -343,7 +343,7 @@ class Fun(commands.Cog):
                 break
 
         embed = discord.Embed(color=0x2f3136)
-        embed.description = f"Your battery percentage is {battery_percentage}% ({category}) 🔋"
+        embed.description = f"{ctx.author.mention}'s battery percentage is {battery_percentage}% ({category}) 🔋"
         embed.set_footer(text=f"How charged are you? - {ctx.author.name}")
         await ctx.send(embed=embed)
 
