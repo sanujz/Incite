@@ -318,6 +318,37 @@ class Fun(commands.Cog):
         embed.set_footer(text=f"What's your personality? - {ctx.author.name}")
         await ctx.send(embed=embed)
 
+    @commands.command(name="battery",
+                      help="Check your battery percentage",
+                      usage="battery")
+    async def battery(self, ctx):
+        # Replace this with actual code to get the battery percentage
+        battery_percentage = 75  # Example value, you'll need to retrieve the actual percentage
+    
+        # Define custom percentage categories
+        percentage_categories = {
+            'full': 100,
+            'high': 90,
+            'medium': 75,
+            'above_average': 50,
+            'low': 25,
+            'verylow': 10,
+            'empty': 15,
+            'dead': 0
+        }
+
+        # Determine the category based on the battery percentage
+        category = None
+        for cat, threshold in percentage_categories.items():
+            if battery_percentage >= threshold:
+                category = cat
+                break
+
+        embed = discord.Embed(color=0x2f3136)
+        embed.description = f"Your battery percentage is {battery_percentage}% ({category}) 🔋"
+        embed.set_footer(text=f"How charged are you? - {ctx.author.name}")
+        await ctx.send(embed=embed)
+
     @commands.command(name="slots")
     @blacklist_check()
     @ignore_check()
