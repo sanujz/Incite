@@ -303,7 +303,7 @@ Aliases""")
                               description='Here is a gif of Pikachu.',
                               color=0x2f3136)
         embed.set_image(url=data['link'])
-        embed.set_footer(name="Made By ~ Hacker_xD#0001", icon_url="")
+        embed.set_footer(name="Thank you for using Incite", icon_url="")
         await ctx.channel.trigger_typing()
         await ctx.send(embed=embed)
 
