@@ -221,28 +221,7 @@ class Extra(commands.Cog):
                          icon_url=ctx.author.avatar.url if ctx.author.avatar
                          else ctx.author.default_avatar.url)
         embed.set_thumbnail(url=self.bot.user.avatar.url)
-        await ctx.send(embed=embed)
-    
-    @commands.command(name="serverinfo", aliases=["si"], help="Get information about the server.")
-    async def serverinfo(self, ctx: commands.Context):
-        guild = ctx.guild
-        total_members = guild.member_count
-        total_channels = len(guild.channels)
-        total_roles = len(guild.roles)
-        total_emojis = len(guild.emojis)
-        total_bots = sum(member.bot for member in guild.members)
-
-        embed = discord.Embed(color=0x2f3136, title=f"{guild.name} Information")
-        embed.add_field(name="Server ID", value=guild.id, inline=False)
-        embed.add_field(name="Owner", value=guild.owner.mention, inline=False)
-        embed.add_field(name="Total Members", value=total_members, inline=False)
-        embed.add_field(name="Total Channels", value=total_channels, inline=False)
-        embed.add_field(name="Total Roles", value=total_roles, inline=False)
-        embed.add_field(name="Total Emojis", value=total_emojis, inline=False)
-        embed.add_field(name="Total Bots", value=total_bots, inline=False)
-        embed.set_thumbnail(url=guild.icon_url)
-        embed.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
-        await ctx.send(embed=embed)
+        await ctx.send(embed=embed)    
 
     @blacklist_check()
     @ignore_check()
