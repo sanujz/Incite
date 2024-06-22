@@ -323,21 +323,19 @@ class Fun(commands.Cog):
                       usage="battery")
     async def battery(self, ctx):
         # Replace this with actual code to get the battery percentage
-        battery_percentage = 75  # Example value, you'll need to retrieve the actual percentage
-    
-        # Define custom percentage categories
+        battery_percentage = random.randint(0, 100)  # Generate a random percentage
+
+    # Define custom percentage categories
         percentage_categories = {
             'full': 100,
             'high': 90,
             'medium': 75,
             'above_average': 50,
             'low': 25,
-            'verylow': 10,
-            'empty': 15,
-            'dead': 0
+            'empty': 15
         }
 
-        # Determine the category based on the battery percentage
+    # Determine the category based on the battery percentage
         category = None
         for cat, threshold in percentage_categories.items():
             if battery_percentage >= threshold:
