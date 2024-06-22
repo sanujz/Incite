@@ -16,4 +16,4 @@ class hacker111111111(commands.Cog):
 
     @commands.group()
     async def __Fun__(self, ctx: commands.Context):
-        """` tickle` , `kiss` , `hug` , `slap` , `pat` , `feed` , `pet` , `howgay` , `slots` , ` penis` , `meme` , `cat` , `iplookup`"""
+        """` tickle` , `kiss` , `hug` , `slap` , `pat` , `feed` , `pet` , `howgay`, `howtall`, `howfat`, `howsmart`, `battery`, `person`, `iq` , `job`, `slots` , ` penis` , `meme` , `cat` , `iplookup`"""
