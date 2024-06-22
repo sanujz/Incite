@@ -223,41 +223,141 @@ class Extra(commands.Cog):
         embed.set_thumbnail(url=self.bot.user.avatar.url)
         await ctx.send(embed=embed)
 
-    @commands.command(name="serverinfo",
-                      aliases=["sinfo", "si"],
-                      help="Displays information about the server")
-    @blacklist_check()
-    @ignore_check()
-    async def serverinfo(self, ctx):
-        guild = ctx.guild
-        total_members = guild.member_count
-        online_members = sum(member.status != discord.Status.offline for member in guild.members)
-        text_channels = len(guild.text_channels)
-        voice_channels = len(guild.voice_channels)
-        role_count = len(guild.roles)  # Add this line to get the total number of roles
-        server_owner = guild.owner.display_name
-
-        # Create an embed
-        embed = discord.Embed(title=f"Server Information: {guild.name}",
-                              description=f"ID: {guild.id}",
-                              color=0x2f3136)
-
-        # Set the server icon as the thumbnail
-        embed.set_thumbnail(url=ctx.guild.icon_url(format="png"))
-
-        # Add fields
-        embed.add_field(name="Owner", value=server_owner, inline=False)
-        embed.add_field(name="Total Members", value=total_members, inline=False)
-        embed.add_field(name="Text Channels", value=text_channels, inline=True)
-        embed.add_field(name="Voice Channels", value=voice_channels, inline=True)
-        embed.add_field(name="Roles", value=role_count, inline=True)  # Display the role count
-
-        # Set the footer
-        embed.set_footer(text=f"Server Created: {guild.created_at.strftime('%m/%d/%Y %I:%M %p')}")
-    
-        # Send the embed
+  @commands.hybrid_command(name="uptime",
+                    description="Shows you Bot's Uptime .")
+  @blacklist_check()
+  @ignore_check()
+  async def uptime(self, ctx):
+        pfp = ctx.author.display_avatar.url
+        
+        #uptime = str(uptime).split('.')[0]
+        embed = discord.Embed(title=f"{BotName}'s Uptime", description=f"```{str(datetime.timedelta(seconds=int(round(time.time()-start_time))))}```",
+                              color=self.color)
+        embed.set_footer(text=f"Requested by {ctx.author}" ,  icon_url=pfp)
         await ctx.send(embed=embed)
+    
+    @commands.hybrid_command(name="serverinfo",
+                         aliases=["sinfo", "si"],
+                         with_app_command=True)
+@blacklist_check() 
+@ignore_check()
+async def serverinfo(self, ctx: commands.Context):
+    c_at = int(ctx.guild.created_at.timestamp())
+    nsfw_level = ''
+    if ctx.guild.nsfw_level.name == 'default':
+        nsfw_level = 'Default'
+    if ctx.guild.nsfw_level.name == 'explicit':
+        nsfw_level = 'Explicit'
+    if ctx.guild.nsfw_level.name == 'safe':
+        nsfw_level = 'Safe'
+    if ctx.guild.nsfw_level.name == 'age_restricted':
+        nsfw_level = 'Age Restricted'
 
+    guild: discord.Guild = ctx.guild
+    t_emojis = len(guild.emojis)
+    t_stickers = len(guild.stickers)
+    total_emojis = t_emojis + t_stickers
+
+    embed = discord.Embed(color=self.color).set_author(
+        name=f"{guild.name}'s Information",
+        icon_url=guild.me.display_avatar.url
+        if guild.icon is None else guild.icon.url).set_footer(
+            text=f"Requested By {ctx.author}",
+            icon_url=ctx.author.avatar.url
+            if ctx.author.avatar else ctx.author.default_avatar.url)
+    if guild.icon is not None:
+        embed.set_thumbnail(url=guild.icon.url)
+        embed.timestamp = discord.utils.utcnow()
+
+    for r in ctx.guild.roles:
+        if len(ctx.guild.roles) < 1:
+            roless = "None"
+        else:
+            if len(ctx.guild.roles) < 50:
+                roless = " • ".join(
+                    [role.mention for role in ctx.guild.roles[1:][::-1]])
+            else:
+                if len(ctx.guild.roles) > 50:
+                    roless = "Too many roles to show here."
+    embed.add_field(
+        name="**__About__**",
+        value=
+        f"**Name : ** {guild.name}\n**ID :** {guild.id}\n**Owner 👑 :** {guild.owner} (<@{guild.owner_id}>)\n**Created At : ** <t:{c_at}:F>\n**Members :** {len(guild.members)}",
+        inline=False)
+
+    embed.add_field(
+        name="**__Extras__**",
+        value=
+        f"""**Verification Level :** {str(guild.verification_level).title()}\n**AFK Channel :** {ctx.guild.afk_channel}\n**AFK Timeout :** {str(ctx.guild.afk_timeout / 60)}\n**System Channel :** {"None" if guild.system_channel is None else guild.system_channel.mention}\n**NSFW level :** {nsfw_level}\n**Explicit Content Filter :** {guild.explicit_content_filter.name}\n**Max Talk Bitrate :** {int(guild.bitrate_limit)} kbps""",
+        inline=False)
+
+    embed.add_field(name="**__Description__**",
+                    value=f"""{guild.description}""",
+                    inline=False)
+    if guild.features:
+        ftrs = ("\n").join([f"{'✅'+' : '+feature.replace('_',' ').title()}" for feature in guild.features])
+
+        embed.add_field(
+            name="**__Features__**",
+            value=f"{ftrs if len(ftrs) <= 1024 else ftrs[0:1000] + 'and more...'}")
+
+    embed.add_field(name="**__Members__**",
+                    value=f"""
+    Members : {len(guild.members)}
+    Humans : {len(list(filter(lambda m: not m.bot, guild.members)))}
+    Bots : {len(list(filter(lambda m: m.bot, guild.members)))}
+                """,
+                    inline=False)
+    tchl = 0
+    tchh = 0
+    tvcl = 0
+    tvch = 0
+
+    for channel1 in ctx.guild.channels:
+
+        if channel1 in ctx.guild.text_channels:
+            overwrite = channel1.overwrites_for(ctx.guild.default_role)
+            if overwrite.send_messages == False:
+                tchl += 1
+            if overwrite.view_channel == False:
+                tchh += 1
+        if channel1 in ctx.guild.voice_channels:
+            overwrite = channel1.overwrites_for(ctx.guild.default_role)
+            if overwrite.connect == False:
+                tvcl += 1
+            if overwrite.view_channel:
+                tvch += 1
+
+    embed.add_field(name="**__Channels__**",
+                    value=f"""
+    Categories : {len(guild.categories)}
+    Text Channels : {len(guild.text_channels)} (Locked: {tchl}, Hidden: {tchh})
+    Voice Channels : {len(guild.voice_channels)} (Locked: {tvcl}, Hidden: {tvch})
+    Threads : {len(guild.threads)}
+                """,
+                    inline=False)
+
+    embed.add_field(name="**__Emoji Info__**",
+                    value=f"""
+    **Regular Emojis :** {t_emojis}
+    **Stickers :** {t_stickers}
+    **Total Emoji/Stickers :** {total_emojis}
+               """,
+                    inline=False)
+
+    embed.add_field(
+        name="**__Boost Status__**",
+        value=
+        f"Level : {guild.premium_tier} 💎 {guild.premium_subscription_count} Boosts ]\nBooster Role : {guild.premium_subscriber_role.mention if guild.premium_subscriber_role else 'None'}",
+        inline=False)
+    embed.add_field(name=f"**__Server Roles [ {len(guild.roles) - 1} ]__**",
+                    value=f"{roless}",
+                    inline=False)
+
+    if guild.banner is not None:
+        embed.set_image(url=guild.banner.url)
+    return await ctx.reply(embed=embed)
+  
     @blacklist_check()
     @ignore_check()
     @commands.hybrid_command(name="userinfo",
