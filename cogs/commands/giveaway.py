@@ -132,7 +132,7 @@ class Giveaway(commands.Cog):
                              icon_url=self.bot.user.display_avatar.url)
         embed.set_footer(text=f"Ends at")
 
-        message = await ctx.send("<:Incite_Giveaway:1253979871160438825> **GIVEAWAY**", embed=embed)
+        message = await ctx.send("<:Incite_Prize:1253980247963992125> **GIVEAWAY**", embed=embed)
         try:
            await ctx.message.delete()
         except:
