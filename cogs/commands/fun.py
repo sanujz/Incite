@@ -335,7 +335,7 @@ class Fun(commands.Cog):
             'empty': 15
         }
 
-    # Determine the category based on the battery percentage
+        # Determine the category based on the battery percentage
         category = None
         for cat, threshold in percentage_categories.items():
             if battery_percentage >= threshold:
@@ -343,8 +343,7 @@ class Fun(commands.Cog):
                 break
 
         embed = discord.Embed(color=0x2f3136)
-        embed.description = f"{ctx.author.mention}'s battery percentage is {battery_percentage}% ({category}) 🔋"
-        embed.set_footer(text=f"How charged are you? - {ctx.author.name}")
+        embed.description = f"{ctx.author.mention}, your battery percentage is {battery_percentage}% ({category}) 🔋"
         await ctx.send(embed=embed)
 
     @commands.command(name="slots")
