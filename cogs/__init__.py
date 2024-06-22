@@ -22,6 +22,7 @@ from .commands.ignore import Ignore
 from .commands.vanityroles import Vanityroles
 from .commands.vcrole import Invcrole
 from .commands.logging import Logging
+from .commands.giveaway import Giveaway
 
 
 #____________ Events _____________
@@ -84,6 +85,7 @@ async def setup(bot: Astroz):
   await bot.add_cog(Ignore(bot))
   await bot.add_cog(Invcrole(bot))
   await bot.add_cog(Logging(bot))
+  await bot.add_cog(Giveaway(bot))
 
     
 
