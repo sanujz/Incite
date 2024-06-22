@@ -318,32 +318,24 @@ class Fun(commands.Cog):
         embed.set_footer(text=f"What's your personality? - {ctx.author.name}")
         await ctx.send(embed=embed)
 
-    @commands.command(name="battery",
-                      help="Check your battery percentage",
-                      usage="battery")
-    async def battery(self, ctx):
-        # Replace this with actual code to get the battery percentage
-        battery_percentage = random.randint(0, 100)  # Generate a random percentage
-
-    # Define custom percentage categories
-        percentage_categories = {
-            'full': 100,
-            'high': 90,
-            'medium': 75,
-            'above_average': 50,
-            'low': 25,
-            'empty': 15
-        }
-
-        # Determine the category based on the battery percentage
-        category = None
-        for cat, threshold in percentage_categories.items():
-            if battery_percentage >= threshold:
-                category = cat
-                break
-
+    @commands.command(name="checkbattery",
+                      aliases=['battery'],
+                      help="check someone's battery percentage",
+                      usage="checkbattery <person>")
+    @blacklist_check()
+    @ignore_check()
+    async def howbattery(self, ctx, *, person):
         embed = discord.Embed(color=0x2f3136)
-        embed.description = f"{ctx.author.mention}, your battery percentage is {battery_percentage}% ({category}) 🔋"
+        responses = [
+            '50', '75', '25', '1', '3', '5', '10', '65', '60', '85', '30',
+            '40', '45', '80', '100', '150', '1000'
+        ]
+        battery_percent = random.choice(responses)
+        if battery_percent == '100':
+            embed.description = f"**{person}'s battery is charged to a magical 100%!**"
+        else:
+            embed.description = f"**{person} has {battery_percent}% battery remaining. Charge up!**"
+        embed.set_footer(text=f"How's your battery? - {ctx.author.name}")
         await ctx.send(embed=embed)
 
     @commands.command(name="slots")
