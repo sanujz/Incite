@@ -82,7 +82,7 @@ class Giveaway(commands.Cog):
         re = await self.cursor.fetchall()
 
         if winners >=  15:
-            embed = discord.Embed(description=f"⚠ Cannot exceed more than 15 winners.", color=0x2f3136)
+            embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> Cannot exceed more than 15 winners.", color=0x2f3136)
             message = await ctx.send(embed=embed)
             await asyncio.sleep(5)
             await message.delete()
@@ -90,7 +90,7 @@ class Giveaway(commands.Cog):
 
         g_list = [i[0] for i in re]
         if len(g_list) >= 5:
-            embed = discord.Embed(description=f"⚠ The maximum limit of giveaways for this guild has been reached.", color=0x2f3136)
+            embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> The maximum limit of giveaways for this guild has been reached.", color=0x2f3136)
             message = await ctx.send(embed=embed)
             await asyncio.sleep(5)
             await message.delete()
@@ -98,20 +98,20 @@ class Giveaway(commands.Cog):
 
         converted = self.convert(time)
         if converted / 60 >= 50400:
-            embed = discord.Embed(description=f"⚠ Time cannot exceed 31 days!", color=0x2f3136)
+            embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> Time cannot exceed 31 days!", color=0x2f3136)
             message = await ctx.send(embed=embed)
             await asyncio.sleep(5)
             await message.delete()
             return
 
         if converted == -1:
-            embed = discord.Embed(description=f"⚠ Invalid time format", color=0x2f3136)
+            embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> Invalid time format", color=0x2f3136)
             message = await ctx.send(embed=embed)
             await asyncio.sleep(5)
             await message.delete()
             return
         if converted == -2:
-            embed = discord.Embed(description=f"⚠ Invalid time format. Please provide the time in numbers.", color=0x2f3136)
+            embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> Invalid time format. Please provide the time in numbers.", color=0x2f3136)
             message = await ctx.send(embed=embed)
             await asyncio.sleep(5)
             await message.delete()
@@ -180,12 +180,12 @@ class Giveaway(commands.Cog):
                     embed.set_author(name=giveaway[5])
                     embed.set_footer(text=f"Ended at")
                     try:
-                        await message.edit(content="🎁 **GIVEAWAY ENDED** 🎁", embed=embed)
+                        await message.edit(content="<:Incite_Prize:1253980247963992125> **GIVEAWAY ENDED** <:Incite_Prize:1253980247963992125>", embed=embed)
                     except:
                         pass
 
                     try:
-                        await message.reply(f"{winner} 🎉 Congratulations! you won **{giveaway[5]}!**, Hosted by <@{int(giveaway[3])}>")
+                        await message.reply(f"{winner} <:Incite_Giveaway:1253979871160438825> Congratulations! you won **{giveaway[5]}!**, Hosted by <@{int(giveaway[3])}>")
                     except:
                         pass
                     await self.cursor.execute("DELETE FROM Giveaway WHERE message_id = ? AND guild_id = ?", (message.id, message.guild.id))
@@ -214,7 +214,7 @@ class Giveaway(commands.Cog):
             try:
                 int(message_id)
             except ValueError:
-                embed = discord.Embed(description=f"⚠ The provided message ID is invalid.", color=0x2f3136)
+                embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> The provided message ID is invalid.", color=0x2f3136)
                 message = await ctx.send(embed=embed)
                 await asyncio.sleep(5)
                 await message.delete()
@@ -226,7 +226,7 @@ class Giveaway(commands.Cog):
             re = await self.cursor.fetchone()
 
             if re is None:
-                embed = discord.Embed(description=f"⚠ The giveaway was not found.", color=0x2f3136)
+                embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> The giveaway was not found.", color=0x2f3136)
                 message = await ctx.send(embed=embed)
                 await asyncio.sleep(5)
                 await message.delete()
@@ -239,7 +239,7 @@ class Giveaway(commands.Cog):
             users.remove(self.bot.user.id)
 
             if len(users) < 1:
-                await ctx.send(f"✅ Successfully ended the giveaway in <#{int(re[6])}>")
+                await ctx.send(f"<:Incite_Success:1251971018033987654> Successfully ended the giveaway in <#{int(re[6])}>")
                 await message.reply(f"No one won the **{re[5]}** giveaway, due to not enough participants.")
                 await self.cursor.execute("DELETE FROM Giveaway WHERE message_id = ? AND guild_id = ?", (message.id, message.guild.id))
                 return
@@ -256,12 +256,12 @@ class Giveaway(commands.Cog):
                             icon_url=ctx.guild.icon.url)
             embed.set_footer(text=f"Ended at")
 
-            await message.edit(content="🎁 **GIVEAWAY ENDED** 🎁", embed=embed)
+            await message.edit(content="<:Incite_Prize:1253980247963992125> **GIVEAWAY ENDED** <:Incite_Prize:1253980247963992125>", embed=embed)
 
             if int(ctx.channel.id) != int(re[6]):
-                await ctx.send(f"✅ Successfully ended the giveaway in <#{int(re[6])}>")
+                await ctx.send(f"<:Incite_Success:1251971018033987654> Successfully ended the giveaway in <#{int(re[6])}>")
 
-            await message.reply(f"{winner} 🎉 Congratulations! you won **{re[5]}!**, Hosted by <@{int(re[3])}>")
+            await message.reply(f"{winner} <:Incite_Giveaway:1253979871160438825> Congratulations! you won **{re[5]}!**, Hosted by <@{int(re[3])}>")
             await self.cursor.execute("DELETE FROM Giveaway WHERE message_id = ? AND guild_id = ?", (message.id, message.guild.id))
             #print(f"[Gend] Giveaway Ended - {message.guild.name} ({message.guild.id}) - ({re[5]})")
 
@@ -270,7 +270,7 @@ class Giveaway(commands.Cog):
             re = await self.cursor.fetchone()
 
             if re is None:
-                return await ctx.send(f"⚠ The giveaway was not found.")
+                return await ctx.send(f"<:Incite_Error:1251971046475567227> The giveaway was not found.")
         
             current_time = datetime.datetime.now().timestamp()
 
@@ -297,9 +297,9 @@ class Giveaway(commands.Cog):
                             icon_url=ctx.guild.icon.url)
             embed.set_footer(text=f"Ended at")
 
-            await message.edit(content="🎁 **GIVEAWAY ENDED** 🎁", embed=embed)
+            await message.edit(content="<:Incite_Prize:1253980247963992125> **GIVEAWAY ENDED**", embed=embed)
 
-            await message.reply(f"{winner} 🎉 Congratulations! you won **{re[5]}!**, Hosted by <@{int(re[3])}>")
+            await message.reply(f"{winner} <:Incite_Giveaway:1253979871160438825> Congratulations! you won **{re[5]}!**, Hosted by <@{int(re[3])}>")
             await self.cursor.execute("DELETE FROM Giveaway WHERE message_id = ? AND guild_id = ?", (message.id, message.guild.id))
             #print(f"[Gend] Giveaway Ended - {message.guild.name} ({message.guild.id}) - ({re[5]})")
             
@@ -311,7 +311,7 @@ class Giveaway(commands.Cog):
     @commands.check_any(commands.is_owner(), commands.has_permissions(manage_guild=True))
     async def greroll(self, ctx, message_id: typing.Optional[int] = None):
         if not ctx.message.reference:
-            embed = discord.Embed(description=f"⚠ Reply with the giveaway message to reroll.", color=0x2f3136)
+            embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> Reply with the giveaway message to reroll.", color=0x2f3136)
             message = await ctx.send(embed=embed)
             await asyncio.sleep(5)
             await message.delete()
@@ -323,7 +323,7 @@ class Giveaway(commands.Cog):
         message = await ctx.fetch_message(message_id)
 
         if ctx.message.reference.resolved.author.id != self.bot.user.id:
-            embed = discord.Embed(description=f"⚠ The giveaway was not found.", color=0x2f3136)
+            embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> The giveaway was not found.", color=0x2f3136)
             message = await ctx.send(embed=embed)
             await asyncio.sleep(5)
             await message.delete()
@@ -334,7 +334,7 @@ class Giveaway(commands.Cog):
         re = await self.cursor.fetchone()
 
         if re is not None:
-            embed = discord.Embed(description=f"⚠ The giveaway is currently running. Please use the gend command instead to end the giveaway.", color=0x2f3136)
+            embed = discord.Embed(description=f"<:Incite_Error:1251971046475567227> The giveaway is currently running. Please use the gend command instead to end the giveaway.", color=0x2f3136)
             message = await ctx.send(embed=embed)
             await asyncio.sleep(5)
             await message.delete()
@@ -348,7 +348,7 @@ class Giveaway(commands.Cog):
             return
         
         winners = random.sample(users, k=1)
-        await message.reply(f"🎉 The new winner is "+", ".join(f"<@{i}>" for i in winners)+". Congratulations!")
+        await message.reply(f"<:Incite_Giveaway:1253979871160438825> The new winner is "+", ".join(f"<@{i}>" for i in winners)+". Congratulations!")
         await self.connection.commit()
 
     def convert(self, time):
