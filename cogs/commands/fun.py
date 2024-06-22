@@ -386,16 +386,15 @@ class Fun(commands.Cog):
     @blacklist_check()
     @ignore_check()
     async def meme(self, ctx):
-        embed = discord.Embed(title="""Take some memes""", color=0x2f3136)
+        embed = discord.Embed(title="Take some memes", color=0x2f3136)
         async with aiohttp.ClientSession() as cs:
-            async with cs.get(
-                    'https://www.reddit.com/r/dankmemes/new.json?sort=hot'
-            ) as r:
+            async with cs.get('https://www.reddit.com/r/dankmemes/new.json?sort=hot') as r:
                 res = await r.json()
-                embed.set_image(url=res['data']['children'][random.randint(
-                    0, 25)]['data']['url'])
-                embed.set_footer(text=f'Random Meme:')
-                #embed.set_footer(text=f'Random Meme:')
+                random_meme = random.choice(res['data']['children'])
+                meme_title = random_meme['data']['title']
+                meme_url = random_meme['data']['url']
+                embed.set_image(url=meme_url)
+                embed.set_footer(text=f"Random Meme: {meme_title}")
                 await ctx.send(embed=embed)
 
     @commands.command(name="cat", usage="cat")
@@ -431,7 +430,7 @@ class Fun(commands.Cog):
                     embed.set_footer(
                         text='Thanks For Using Incite',
                         icon_url=
-                        "https://media.discordapp.net/attachments/1036538198236614676/1037664035186954270/blue_circle.jpg"
+                        "https://cdn.discordapp.com/avatars/1251900087932817471/37e598149a590bec31c732ee263960fd.png?size=1024"
                     )
                     await ctx.send(embed=embed)
                 except KeyError:
