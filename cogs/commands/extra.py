@@ -240,7 +240,6 @@ class Extra(commands.Cog):
                               color=0x2f3136)
         embed.add_field(name="Owner", value=server_owner, inline=False)
         embed.add_field(name="Total Members", value=total_members, inline=False)
-        embed.add_field(name="Online Members", value=online_members, inline=False)
         embed.add_field(name="Text Channels", value=text_channels, inline=True)
         embed.add_field(name="Voice Channels", value=voice_channels, inline=True)
 
