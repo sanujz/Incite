@@ -15,7 +15,10 @@ from discord.ext.commands import Context
 from discord.ext import commands, tasks
 from discord.ui import Button, View
 from utils import Paginator, DescriptionEmbedPaginator, FieldPagePaginator, TextPaginator
-
+from typing import Union, Optional
+from io import BytesIO
+import requests
+import aiohttp
 
 time_regex = re.compile(r"(?:(\d{1,5})(h|s|m|d))+?")
 time_dict = {"h": 3600, "s": 1, "m": 60, "d": 86400}
@@ -1703,26 +1706,6 @@ Reason: `{entry.reason}`\n\n''')
                                icon_url=f"{ctx.author.avatar}")
             await ctx.reply(embed=hacker5, mention_author=False)
 
-    @commands.command(aliases=["ri", "icon"], description="Changes the icon for the role.")
-    @commands.has_permissions(administrator=True)
-    @commands.bot_has_guild_permissions(manage_roles=True)
-    async def change_role_icon(ctx, role: discord.Role, icon_url: str):
-        try:
-            # Download the icon image
-            async with aiohttp.ClientSession() as session:
-                async with session.get(icon_url) as response:
-                    if response.status == 200:
-                        icon_bytes = await response.read()
-                    else:
-                        await ctx.send("Failed to download the icon image.")
-                        return
-
-        # Update the role's icon
-            await role.edit(icon=icon_bytes)
-            await ctx.send(f"Icon for {role.name} has been updated successfully!")
-        except Exception as e:
-            await ctx.send(f"An error occurred: {e}")
-
     @commands.hybrid_command(aliases=['as', 'stealsticker'], help="Adds the sticker to the server")
     @commands.has_permissions(manage_emojis=True)
     async def addsticker(self, ctx: commands.Context, *, name=None):
@@ -1765,6 +1748,4 @@ Reason: `{entry.reason}`\n\n''')
               await ctx.reply(f"<:Incite_Success:1251971018033987654> | Sucessfully deleted sticker named `{name}`")
           except:
               await ctx.reply("Failed to delete the sticker")
-
-
 
