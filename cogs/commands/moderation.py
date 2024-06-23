@@ -1706,42 +1706,22 @@ Reason: `{entry.reason}`\n\n''')
     @commands.command(aliases=["ri", "icon"], description="Changes the icon for the role.")
     @commands.has_permissions(administrator=True)
     @commands.bot_has_guild_permissions(manage_roles=True)
-    async def roleicon(self, ctx: commands.Context, role: discord.Role, *, icon: Union[discord.Emoji, discord.PartialEmoji, str] = None):
-      if role.position >= ctx.guild.me.top_role.position:
-          em = discord.Embed(description=f"{role.mention} role is higher than my role. Move it to the top!", color=self.color)
-          return await ctx.send(embed=em, delete_after=15)
+    async def change_role_icon(ctx, role: discord.Role, icon_url: str):
+        try:
+            # Download the icon image
+            async with aiohttp.ClientSession() as session:
+                async with session.get(icon_url) as response:
+                    if response.status == 200:
+                        icon_bytes = await response.read()
+                    else:
+                        await ctx.send("Failed to download the icon image.")
+                        return
 
-      if icon is None:
-          c = False
-          url = None
-          for xd in ctx.message.attachments:
-              url = xd.url
-              c = True
-
-          if c:
-              try:
-                  async with aiohttp.request("GET", url) as r:
-                      img = await r.read()
-                      await role.edit(display_icon=img)
-                      em = discord.Embed(description=f"✅ Successfully changed icon of {role.mention}", color=self.color)
-              except:
-                  return await ctx.reply("Failed to change the icon of the role")
-          else:
-              await role.edit(display_icon=None)
-              em = discord.Embed(description=f"✅ Successfully removed icon from {role.mention}", color=self.color)
-      else:
-          if not icon.startswith("https://"):
-              return await ctx.reply("Please provide a valid link starting with 'https://'.")
-
-          try:
-              async with aiohttp.request("GET", icon) as r:
-                  img = await r.read()
-                  await role.edit(display_icon=img)
-                  em = discord.Embed(description=f"✅ Successfully changed the icon for {role.mention}", color=self.color)
-          except:
-              return await ctx.reply("An error occurred while changing the icon for the role")
-
-      return await ctx.reply(embed=em, mention_author=False)
+          # Update the role's icon
+            await role.edit(icon=icon_bytes)
+            await ctx.send(f"Icon for {role.name} has been updated successfully!")
+        except Exception as e:
+            await ctx.send(f"An error occurred: {e}")
 
     @commands.hybrid_command(aliases=['as', 'stealsticker'], help="Adds the sticker to the server")
     @commands.has_permissions(manage_emojis=True)
