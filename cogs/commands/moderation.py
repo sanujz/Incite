@@ -1703,7 +1703,97 @@ Reason: `{entry.reason}`\n\n''')
                                icon_url=f"{ctx.author.avatar}")
             await ctx.reply(embed=hacker5, mention_author=False)
 
+    @commands.command(aliases=["ri", 'icon'], description="Changes the icon for the role .")
+    @commands.has_permissions(administrator=True)
+    @commands.bot_has_guild_permissions(manage_roles=True)
+    async def roleicon(self, ctx: commands.Context, role: discord.Role, *, icon: Union[discord.Emoji, discord.PartialEmoji, str]=None):
+          if role.position >= ctx.guild.me.top_role.position:
+              em = discord.Embed(description=f"| {role.mention} role is higher than my role, move it to the top!", color=self.color)
+          if ctx.author.top_role.position <= role.position:
+              em = discord.Embed(description=f"| {role.mention} has the same or higher position from your top role!", color=self.color)
+              return await ctx.send(embed=em, delete_after=15)
+          if icon is None:
+              c = False
+              url = None
+              for xd in ctx.message.attachments:
+                  url = xd.url
+                  c = True
+              if c:
+                  try:
+                      async with aiohttp.request("GET", url) as r:
+                          img = await r.read()
+                          await role.edit(display_icon=img)
+                      em = discord.Embed(description=f"<:Incite_Success:1251971018033987654> | Successfully changed icon of {role.mention}", color=self.color)
+                  except:
+                      return await ctx.reply("Failed to change the icon of the role")
+              else:
+                  await role.edit(display_icon=None)
+                  em = discord.Embed(description=f"<:Incite_Success:1251971018033987654> | Successfully removed icon from {role.mention}", color=self.color)
+              return await ctx.reply(embed=em, mention_author=False)
+          if isinstance(icon, discord.Emoji) or isinstance(icon, discord.PartialEmoji):
+              png = f"https://cdn.discordapp.com/emojis/{icon.id}.png"
+              try:
+                async with aiohttp.request("GET", png) as r:
+                  img = await r.read()
+              except:
+                return await ctx.reply("Failed to change the icon of the role")
+              await role.edit(display_icon=img)
+              em = discord.Embed(description=f"<:Incite_Success:1251971018033987654> | Successfully changed the icon for {role.mention} to {icon}", color=self.color)
+              return await ctx.reply(embed=em, mention_author=False)
+          else:
+              if not icon.startswith("https://"):
+                  return await ctx.reply("Give a valid link")
+              try:
+                async with aiohttp.request("GET", icon) as r:
+                  img = await r.read()
+              except:
+                return await ctx.reply("An error occured while changing the icon for the role")
+              await role.edit(display_icon=img)
+              em = discord.Embed(description=f"<:Incite_Success:1251971018033987654> | Successfully changed the icon for {role.mention}", color=self.color)
+              return await ctx.reply(embed=em, mention_author=False)
 
+    @commands.hybrid_command(aliases=['as', 'stealsticker'], help="Adds the sticker to the server")
+    @commands.has_permissions(manage_emojis=True)
+    async def addsticker(self, ctx: commands.Context, *, name=None):
+          if ctx.message.reference is None:
+              return await ctx.reply("No replied message found")
+          msg = await ctx.channel.fetch_message(ctx.message.reference.message_id)
+          if len(msg.stickers) == 0:
+              return await ctx.reply("No sticker found")
+          n, url = "", ""
+          for i in msg.stickers:
+              n = i.name
+              url = i.url
+          if name is None:
+              name = n
+          try:
+              response = requests.get(url)
+              if url.endswith("gif"):
+                  fname = "Sticker.gif"
+              else:
+                  fname = "Sticker.png"
+              file = discord.File(BytesIO(response.content), fname)
+              s = await ctx.guild.create_sticker(name=name, description= f"Sticker created by {str(self.bot.user)}", emoji="❤️", file=file)
+              await ctx.reply(f"<:Incite_Success:1251971018033987654> | Sucessfully created sticker with name `{name}`", stickers=[s])
+          except:
+              return await ctx.reply("Failed to create the sticker")
+        
+    @commands.hybrid_command(aliases=["deletesticker", "removesticker"], help="Delete the sticker from the server")
+    @commands.has_permissions(manage_emojis=True)
+    async def delsticker(self, ctx: commands.Context, *, name=None):
+          if ctx.message.reference is None:
+              return await ctx.reply("No replied message found")
+          msg = await ctx.channel.fetch_message(ctx.message.reference.message_id)
+          if len(msg.stickers) == 0:
+              return await ctx.reply("No sticker found")
+          try:
+              name = ""
+              for i in msg.stickers:
+                  name = i.name
+                  await ctx.guild.delete_sticker(i)
+              await ctx.reply(f"<:Incite_Success:1251971018033987654> | Sucessfully deleted sticker named `{name}`")
+          except:
+              await ctx.reply("Failed to delete the sticker")
 
 
 
