@@ -1717,7 +1717,7 @@ Reason: `{entry.reason}`\n\n''')
                         await ctx.send("Failed to download the icon image.")
                         return
 
-          # Update the role's icon
+        # Update the role's icon
             await role.edit(icon=icon_bytes)
             await ctx.send(f"Icon for {role.name} has been updated successfully!")
         except Exception as e:
